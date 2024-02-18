@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_app/constant/colors_manager.dart';
 import 'package:new_app/constant/size_manager.dart';
 import 'package:new_app/data/models/dolphin_model.dart';
 import 'package:new_app/logic/dolphin_cubit.dart';
@@ -25,6 +26,7 @@ class DolphinScreen extends StatelessWidget {
     return Column(
       children: [
         Expanded(
+          // we can use  FadeInImage to use loading asset to avoid loading internet
             child:  Container(
               width: AppSize.sInfinity,
 
@@ -48,7 +50,7 @@ class DolphinScreen extends StatelessWidget {
             }, child: const Text('Stop'))),
             const SizedBox(width: AppSize.s20,),
             Expanded(child: ElevatedButton(onPressed: (){
-              BlocProvider.of<DolphinCubit>(context).onStart();
+              BlocProvider.of<DolphinCubit>(context).onPlay();
             }, child:  const Text('Play'))),
             const SizedBox(width: AppSize.s20,),
             Expanded(child: ElevatedButton(onPressed: (){
@@ -62,7 +64,7 @@ class DolphinScreen extends StatelessWidget {
 
   Widget designError(context){
     return const  Center(
-      child: Text('')// Image(image:AssetImage('assets/error.gif')),
+      child:  Image(image:AssetImage('assets/error.gif')),
     );
   }
 
@@ -87,27 +89,20 @@ class DolphinScreen extends StatelessWidget {
               return Stack(
 
                 children: [
+                  /*
+                  if we use CircularProgressIndicator when get image use
+                 state is DolphinGetLoadingState?showCircularProgressIndicator():  dolphinModel.url.isNotEmpty? designImage(context):designError(context),
+                   */
 
-                  Visibility(
-                    // this code use to load when get image from api
-                    // visible: state is DolphinGetLoadingState,
-                    // child: showCircularProgressIndicator(),
-                    visible: dolphinModel.url.isNotEmpty,
-                    child: designImage(context),
-                    replacement:designError(context),// dolphinModel.url.isNotEmpty?designImage(context)  : designError(context),
-
-                  ),
-
-
-                  Visibility(
-                    visible: state is DolphinMemoryCompletionState,
-                    child: Container(
+                  // when start  state is DolphinInitState we use it to to avoid empty uri;
+                  state is DolphinInitState?showCircularProgressIndicator() :  dolphinModel.url.isNotEmpty? designImage(context):designError(context),
+                  state is DolphinMemoryCompletionState? Container(
                       margin: EdgeInsets.all(AppSize.s10),
 
                       width: AppSize.sInfinity,
 
                       decoration: BoxDecoration(
-                        color: Colors.yellow.withOpacity(.3),
+                        color:  MyColors.yellow.withOpacity(.3),
                         border: Border.all(),
 
                         borderRadius: BorderRadius.circular(AppSize.s20),
@@ -123,7 +118,7 @@ class DolphinScreen extends StatelessWidget {
 
                             child: Padding(
                               padding: const EdgeInsets.all(AppPadding.p8),
-                              child: Text(message,style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+                              child: Text(message,style: TextStyle(color:MyColors.red,fontWeight: FontWeight.bold),),
                             ),
                           ),
                          
@@ -133,8 +128,8 @@ class DolphinScreen extends StatelessWidget {
 
                         ],
                       ),
-                    ),
-                  ),
+                    ):SizedBox(),
+
                 ],
               );
             },

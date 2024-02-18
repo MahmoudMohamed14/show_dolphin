@@ -16,7 +16,7 @@ class DioHelper{
 
   Future<Map<String, dynamic>?> getDolphin() async {
     try{
-      Response response= await dio.get('photos/random',queryParameters: {'query':'dolphin','client_id':"1vR4WmEyaLw0ZRA9pwnecx8DnC4_osZY4_z-alw-VMM"});
+      Response response= await dio.get('photos/random',queryParameters: {'query':query,'client_id':clientId});
      // print(response.data);
     //  dolphinModel=DolphinModel.fromJson(response.data['urls']);
      // print(dolphinModel.url);
