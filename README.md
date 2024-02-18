@@ -1,7 +1,7 @@
 # Show Dolphin
 
 This is a Application displays random pictures of dolphins.
-## Installation instructions
+## instructions
 - api Unsplash (postman)
 - State management:
     - Bloc Design Pattern (cubit)
