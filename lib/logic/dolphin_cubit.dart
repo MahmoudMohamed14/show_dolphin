@@ -10,7 +10,8 @@ import '../data/repository/dolphin_repository.dart';
 class DolphinCubit extends Cubit<DolphinStates > {
   DolphinRepository dolphinRepository;
   late Timer time;
-  bool isRewindDolphin=false;
+
+ late int counterMemory;
   DolphinCubit(this.dolphinRepository) : super( DolphinInitState());
 
   static DolphinCubit get(context) {
@@ -49,43 +50,41 @@ class DolphinCubit extends Cubit<DolphinStates > {
     }
   }
  void rewindDolphin(){
-    isRewindDolphin=true;
-   onStart();
+
+   onPlay(isRewindDolphin: true);
 
   }
 
   void onStop(){
     time.cancel();
   }
- void  onStart(){
-    int counterMemory=0;
-    int count=0;
+ void  onPlay({bool isRewindDolphin=false}){
+  counterMemory=0;
+
     time =Timer.periodic(const Duration(seconds: 2), (timer) {
 
-      if(isRewindDolphin){
-
-      if(counterMemory<dolphinModelMemory.length) {
-
-
-        emit(DolphinGetSuccessState(dolphinModelMemory[counterMemory]));
-        counterMemory+=1;
-      }
-      else {
-        //print(counter);
-
-        emit(DolphinMemoryCompletionState ("Cannot remember any more dolphins"));
-        onStop();
-        isRewindDolphin=!isRewindDolphin;
+      if(!isRewindDolphin){
+        getDolphin();
 
       }
+      else{
 
-      }else{
-        count+=1;
+        if(counterMemory<dolphinModelMemory.length) {
+          // print(dolphinModelMemory[counterMemory]);
+          emit(DolphinGetSuccessState(dolphinModelMemory[counterMemory]));
+          counterMemory+=1;
+        }
+        else {
 
-       getDolphin();
-       print(count);
+
+          emit(DolphinMemoryCompletionState ("Cannot remember any more dolphins"));
+          onStop();
+          isRewindDolphin=!isRewindDolphin;
+
+        }
+
       }
-      // BlocProvider.of<DolphinCubit>(context).getDolphin();
+
     });
 
   }

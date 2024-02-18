@@ -20,7 +20,7 @@ class AppRouter{
     Route ?generateRoute(RouteSettings settings){
         switch(settings.name){
             case dolphinScreen:
-                return  MaterialPageRoute(builder: (_)=>BlocProvider(create: (BuildContext context)=>dolphinCubit..onStart(),child: DolphinScreen(dolphinModel: dolphinCubit.getDolphin(),)));
+                return  MaterialPageRoute(builder: (_)=>BlocProvider(create: (BuildContext context)=>dolphinCubit..onPlay(),child: DolphinScreen(dolphinModel: dolphinCubit.getDolphin(),)));
         }
     }
 }
