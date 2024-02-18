@@ -11,7 +11,7 @@ This is a Application displays random pictures of dolphins.
     - bloc
     - mockito
     -dio
--Running the App:
+- Running the App:
 
     To run the Flutter app on your local machine, follow these steps:
 
