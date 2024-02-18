@@ -2,7 +2,7 @@
 
 This is a Application displays random pictures of dolphins.
 ## Installation instructions
--api Unsplash (postman)
+- api Unsplash (postman)
 - State management:
     - Bloc Design Pattern (cubit)
 
@@ -18,7 +18,7 @@ This is a Application displays random pictures of dolphins.
     1. Navigate to the project directory in your terminal.
     2. Ensure that you have a connected device or emulator running.
     3. Run the following command: flutter run.
--Running Tests:
+- Running Tests:
     1. Navigate to the project directory in your terminal.
     2. Run the following command:flutter test.
      
